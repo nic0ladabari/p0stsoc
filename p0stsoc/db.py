@@ -119,12 +119,18 @@ def insert_article(conn, guid, keyword_id, title, url, source, published, snippe
 
 
 def list_articles(conn, status=None, limit=200):
+    """Newest first. `limit=None` returns the whole match (used by `post`)."""
     base = ("SELECT a.*, k.query AS keyword FROM articles a "
             "LEFT JOIN keywords k ON k.id = a.keyword_id ")
-    if status:
-        return conn.execute(base + "WHERE a.status=? ORDER BY a.id DESC LIMIT ?",
-                            (status, limit)).fetchall()
-    return conn.execute(base + "ORDER BY a.id DESC LIMIT ?", (limit,)).fetchall()
+    where = "WHERE a.status=? " if status else ""
+    order = "ORDER BY a.id DESC"
+    sql = base + where + order
+    if limit is None:
+        args = (status,) if status else ()
+        return conn.execute(sql, args).fetchall()
+    sql += " LIMIT ?"
+    args = (status, limit) if status else (limit,)
+    return conn.execute(sql, args).fetchall()
 
 
 def get_article(conn, aid):

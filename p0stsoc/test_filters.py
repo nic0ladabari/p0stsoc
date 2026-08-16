@@ -16,6 +16,13 @@ def test_exclude():
     assert passes_filter("Qualsiasi cosa", "", [])                             # no exclusions
 
 
+def test_exclude_single_word_uses_boundaries():
+    ex = ["ai"]
+    assert passes_filter("Tesla said something", "", ex)                      # 'ai' inside 'said'
+    assert not passes_filter("Novità AI in Europa", "", ex)
+    assert not passes_filter("Scienza", "modelli di AI generativa", ex)
+
+
 def test_rss_url():
     url = build_rss_url("Tesla", ["Nikola Tesla"], "it", "IT")
     assert "news.google.com/rss/search" in url
@@ -42,6 +49,7 @@ def test_resolve_url():
 
 if __name__ == "__main__":
     test_exclude()
+    test_exclude_single_word_uses_boundaries()
     test_rss_url()
     test_resolve_url()
     print("ok")

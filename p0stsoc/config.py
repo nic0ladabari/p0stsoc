@@ -100,9 +100,16 @@ def import_yaml(conn, path=None, replace_keywords=False):
     return cfg
 
 
+EXPORT_PATH = "config.exported.yaml"
+
+
 def export_yaml(conn, path=None):
-    """Dump DB settings + keywords back to config.yaml."""
-    path = path or CONFIG_PATH
+    """Dump DB settings + keywords to yaml.
+
+    Default path is `config.exported.yaml` so a commented `config.yaml` is
+    not overwritten by accident. Pass a path to write elsewhere.
+    """
+    path = path or EXPORT_PATH
     data = {k: db.get_setting(conn, k, DEFAULTS[k]) for k in SETTING_KEYS}
     data["keywords"] = [
         {

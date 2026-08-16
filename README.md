@@ -33,7 +33,7 @@ The Facebook token does **not** go in the file: pass it via env var (below).
 p0stsoc fetch                 # download news (put this in cron)
 p0stsoc post --dry-run        # preview what would be posted (no FB call)
 p0stsoc serve                 # console at http://127.0.0.1:8000
-p0stsoc export                # DB -> config.yaml
+p0stsoc export                # DB -> config.exported.yaml (does not touch config.yaml)
 p0stsoc import                # config.yaml -> DB (upsert; --replace syncs keywords)
 p0stsoc prune --days 90       # delete posted/skipped rows older than N days
 python -m p0stsoc.test_filters  # exclusion-filter self-check
@@ -95,14 +95,13 @@ Facebook call, so cron and “Post now” cannot publish the same row twice.
   (`googlenewsdecoder`, an internal Google endpoint). It is fragile by
   definition: if the decoder fails or Google changes the format, the redirect
   is posted as fallback — Facebook still shows a preview.
-- `p0stsoc export` **rewrites `config.yaml` and drops comments** (it is a DB dump).
-  If you use the commented file as documentation, export to another path
-  (`p0stsoc export config.exported.yaml`) or keep the comments elsewhere.
+- `p0stsoc export` writes **`config.exported.yaml`** (a DB dump, no comments).
+  `config.yaml` is left alone unless you pass that path explicitly.
 - `p0stsoc import` **upserts** settings and keywords. To delete DB keywords
   that are not in the yaml: `p0stsoc import --replace`.
   `initdb` never deletes keywords already in the DB.
-- The exclusion filter is a **substring** match (title+snippet). A short
-  phrase like `ai` also matches inside other words; use specific exclusions.
+- Single-word exclusions use **word boundaries** (`ai` does not match `said`);
+  multi-word phrases stay substring matches (`Nikola Tesla`).
 - The console has **no authentication**: serve it on localhost only, or
   behind a reverse-proxy that handles access.
 

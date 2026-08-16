@@ -142,7 +142,7 @@ def cmd_post(args):
         n = db.requeue_posting(conn)   # crash mid-post left rows in 'posting'
         if n:
             print(f"requeued {n} stale posting article(s)", file=sys.stderr)
-    approved = db.list_articles(conn, status="approved")
+    approved = db.list_articles(conn, status="approved", limit=None)
     if not approved:
         print("nothing to post")
         return
@@ -182,7 +182,7 @@ def build_parser():
                     help="delete keywords that are not in the yaml")
     pi.set_defaults(func=cmd_import)
 
-    pe = sub.add_parser("export", help="dump the DB to config.yaml")
+    pe = sub.add_parser("export", help="dump the DB to config.exported.yaml")
     pe.add_argument("path", nargs="?")
     pe.set_defaults(func=cmd_export)
 

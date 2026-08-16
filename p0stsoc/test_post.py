@@ -151,6 +151,16 @@ def test_init_schema_adds_posting_since():
     assert "posting_since" in cols
 
 
+def test_list_articles_unlimited():
+    conn = _conn()
+    kid = db.list_keywords(conn)[0]["id"]
+    for i in range(5):
+        db.insert_article(conn, f"g-{i}", kid, "T", "u", "s", "p", "sn", status="approved")
+    conn.commit()
+    assert len(db.list_articles(conn, "approved", limit=2)) == 2
+    assert len(db.list_articles(conn, "approved", limit=None)) >= 6  # guid-1 + 5
+
+
 def test_fb_accepts_non_json_body():
     resp = MagicMock(ok=True)
     resp.json.side_effect = ValueError("not json")
@@ -168,5 +178,6 @@ if __name__ == "__main__":
     test_set_status_guards_stale()
     test_update_keyword_renames_in_place()
     test_init_schema_adds_posting_since()
+    test_list_articles_unlimited()
     test_fb_accepts_non_json_body()
     print("ok")

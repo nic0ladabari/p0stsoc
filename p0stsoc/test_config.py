@@ -136,6 +136,25 @@ def test_console_saves_settings():
         os.remove(path)
 
 
+def test_export_default_path_is_exported_yaml():
+    conn = _conn()
+    old = os.getcwd()
+    tmp = tempfile.mkdtemp()
+    try:
+        os.chdir(tmp)
+        path = config.export_yaml(conn)
+        assert path == "config.exported.yaml"
+        assert os.path.isfile("config.exported.yaml")
+        assert not os.path.isfile("config.yaml")
+    finally:
+        os.chdir(old)
+        for name in ("config.exported.yaml",):
+            p = os.path.join(tmp, name)
+            if os.path.isfile(p):
+                os.remove(p)
+        os.rmdir(tmp)
+
+
 def test_import_rejects_bad_default_mode():
     conn = _conn()
     path = _write_yaml({"default_mode": "maybe"})
@@ -157,5 +176,6 @@ if __name__ == "__main__":
     test_import_rejects_null_keywords()
     test_import_without_keywords_key_keeps_existing()
     test_console_saves_settings()
+    test_export_default_path_is_exported_yaml()
     test_import_rejects_bad_default_mode()
     print("ok")

@@ -9,3 +9,4 @@ p0stsoc.db
 *.db-shm
 *.db-journal
 .env
+config.exported.yaml

@@ -33,7 +33,7 @@ Il token Facebook NON va nel file: si passa via env var (sotto).
 p0stsoc fetch                 # scarica le notizie (da mettere in cron)
 p0stsoc post --dry-run        # mostra cosa posterebbe, senza chiamare FB
 p0stsoc serve                 # console su http://127.0.0.1:8000
-p0stsoc export                # DB -> config.yaml
+p0stsoc export                # DB -> config.exported.yaml (non tocca config.yaml)
 p0stsoc import                # config.yaml -> DB (upsert; --replace allinea le keyword)
 p0stsoc prune --days 90       # cancella posted/skipped più vecchi di N giorni (retention)
 python -m p0stsoc.test_filters  # self-check del filtro esclusioni
@@ -96,14 +96,13 @@ la stessa riga.
   È un meccanismo fragile per definizione: se il decoder fallisce o Google
   cambia formato, si posta il redirect come fallback — Facebook ne mostra
   comunque un'anteprima.
-- `p0stsoc export` **riscrive `config.yaml` perdendo i commenti** (è un dump del DB).
-  Se usi il file commentato come documentazione, esporta su un altro path
-  (`p0stsoc export config.exported.yaml`) o tieni i commenti altrove.
+- `p0stsoc export` scrive **`config.exported.yaml`** (dump del DB, senza commenti).
+  `config.yaml` non viene toccato se non passi quel path esplicitamente.
 - `p0stsoc import` **aggiorna** settings e keyword (upsert). Per cancellare
   dal DB le keyword che non sono nel yaml: `p0stsoc import --replace`.
   `initdb` non cancella mai le keyword già presenti.
-- Il filtro esclusioni è per **sottostringa** (title+snippet). Una frase
-  corta tipo `ai` matcha anche dentro altre parole; usa esclusioni specifiche.
+- Le esclusioni di **una parola** usano i confini di parola (`ai` non matcha
+  `said`); le frasi restano sottostringa (`Nikola Tesla`).
 - La console **non ha autenticazione**: servila solo su localhost o dietro un
   reverse-proxy che gestisce l'accesso.
 

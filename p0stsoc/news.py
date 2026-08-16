@@ -27,9 +27,22 @@ def _strip_html(text):
 
 
 def passes_filter(title, snippet, exclude):
-    """False if any excluded phrase appears in title+snippet (case-insensitive)."""
-    haystack = f"{title} {snippet}".lower()
-    return not any(p.lower() in haystack for p in (exclude or []))
+    """False if any excluded phrase matches title+snippet (case-insensitive).
+
+    Multi-word phrases stay substring matches (`Nikola Tesla`). A single
+    token uses word boundaries so `ai` does not match inside `said`.
+    """
+    haystack = f"{title} {snippet}"
+    for raw in (exclude or []):
+        phrase = (raw or "").strip()
+        if not phrase:
+            continue
+        if " " in phrase:
+            if phrase.lower() in haystack.lower():
+                return False
+        elif re.search(r"(?<!\w)" + re.escape(phrase) + r"(?!\w)", haystack, re.I):
+            return False
+    return True
 
 
 def fetch(query, exclude=None, lang="it", country="IT", timeout=20):
