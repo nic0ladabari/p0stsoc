@@ -1,0 +1,22 @@
+[project]
+name = "p0stsoc"
+version = "0.1.0"
+description = "Google News -> social reposter (Facebook first)"
+requires-python = ">=3.10"
+dependencies = [
+    "feedparser>=6.0",
+    "requests>=2.31",
+    "flask>=3.0",
+    "pyyaml>=6.0",
+    "googlenewsdecoder>=0.1.7",
+]
+
+[project.scripts]
+p0stsoc = "p0stsoc.cli:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["p0stsoc"]

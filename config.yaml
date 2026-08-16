@@ -1,0 +1,14 @@
+# p0stsoc config. Il token FB NON va qui: usa la env var P0STSOC_FB_TOKEN.
+default_mode: review            # review | auto  (default per le keyword senza 'mode')
+fb_page_id: "REPLACE_WITH_PAGE_ID"
+post_template: "{title}\n\n{url}"
+
+keywords:
+  # Esempio: cerca notizie su "Tesla" escludendo il fisico omonimo.
+  # Sostituisci con le tue keyword, poi `p0stsoc import`.
+  - query: "Tesla"
+    exclude: ["Nikola Tesla"]
+    mode: review                # override opzionale: review | auto
+    lang: it
+    country: IT
+    enabled: true
