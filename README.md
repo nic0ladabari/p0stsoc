@@ -95,13 +95,6 @@ Facebook call, so cron and “Post now” cannot publish the same row twice.
   (`googlenewsdecoder`, an internal Google endpoint). It is fragile by
   definition: if the decoder fails or Google changes the format, the redirect
   is posted as fallback — Facebook still shows a preview.
-- `p0stsoc export` writes **`config.exported.yaml`** (a DB dump, no comments).
-  `config.yaml` is left alone unless you pass that path explicitly.
-- `p0stsoc import` **upserts** settings and keywords. To delete DB keywords
-  that are not in the yaml: `p0stsoc import --replace`.
-  `initdb` never deletes keywords already in the DB.
-- Single-word exclusions use **word boundaries** (`ai` does not match `said`);
-  multi-word phrases stay substring matches (`Nikola Tesla`).
 - The console has **no authentication**: serve it on localhost only, or
   behind a reverse-proxy that handles access.
 

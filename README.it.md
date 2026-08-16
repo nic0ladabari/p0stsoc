@@ -96,13 +96,6 @@ la stessa riga.
   È un meccanismo fragile per definizione: se il decoder fallisce o Google
   cambia formato, si posta il redirect come fallback — Facebook ne mostra
   comunque un'anteprima.
-- `p0stsoc export` scrive **`config.exported.yaml`** (dump del DB, senza commenti).
-  `config.yaml` non viene toccato se non passi quel path esplicitamente.
-- `p0stsoc import` **aggiorna** settings e keyword (upsert). Per cancellare
-  dal DB le keyword che non sono nel yaml: `p0stsoc import --replace`.
-  `initdb` non cancella mai le keyword già presenti.
-- Le esclusioni di **una parola** usano i confini di parola (`ai` non matcha
-  `said`); le frasi restano sottostringa (`Nikola Tesla`).
 - La console **non ha autenticazione**: servila solo su localhost o dietro un
   reverse-proxy che gestisce l'accesso.
 
