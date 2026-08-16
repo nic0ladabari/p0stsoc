@@ -2,6 +2,7 @@
 name = "p0stsoc"
 version = "0.1.0"
 description = "Google News -> social reposter (Facebook first)"
+license = { file = "LICENSE" }
 requires-python = ">=3.10"
 dependencies = [
     "feedparser>=6.0",

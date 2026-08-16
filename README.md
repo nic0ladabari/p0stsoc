@@ -97,3 +97,7 @@ Facebook call, so cron and “Post now” cannot publish the same row twice.
   phrase like `ai` also matches inside other words; use specific exclusions.
 - The console has **no authentication**: serve it on localhost only, or
   behind a reverse-proxy that handles access.
+
+## License
+
+[MIT](LICENSE) © 2026 N1kola Di Bari

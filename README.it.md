@@ -98,3 +98,7 @@ la stessa riga.
   corta tipo `ai` matcha anche dentro altre parole; usa esclusioni specifiche.
 - La console **non ha autenticazione**: servila solo su localhost o dietro un
   reverse-proxy che gestisce l'accesso.
+
+## Licenza
+
+[MIT](LICENSE) © 2026 N1kola Di Bari
