@@ -2,6 +2,14 @@
 
 [English](README.md) · Italiano
 
+> Vagabondo, vagabondo  
+> Qualche santo mi guiderà  
+> Ho venduto le mie scarpe  
+> Per un miglio di libertà  
+> Da soli non si vive  
+> Senza amore non morirò  
+> Vagabondo, sto sognando, delirando
+
 Cerca notizie su Google News per keyword (con esclusioni), le mette in un DB
 SQLite e le posta sui social. Facebook è il primo; altri network possono
 arrivare dopo. Coda di moderazione di default, full-auto o ibrido per

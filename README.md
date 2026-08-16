@@ -2,6 +2,14 @@
 
 English · [Italiano](README.it.md)
 
+> Vagabondo, vagabondo  
+> Qualche santo mi guiderà  
+> Ho venduto le mie scarpe  
+> Per un miglio di libertà  
+> Da soli non si vive  
+> Senza amore non morirò  
+> Vagabondo, sto sognando, delirando
+
 Fetch Google News by keyword (with exclusions), store hits in SQLite, and
 post them to social pages. Facebook is first; other networks can follow.
 Human moderation queue by default; full-auto or per-keyword hybrid once
